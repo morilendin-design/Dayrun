@@ -51,6 +51,7 @@
             font-weight: 700;
         }
 
+        /* Genel Scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -60,6 +61,27 @@
         ::-webkit-scrollbar-thumb {
             background: #2a2d38;
             border-radius: 3px;
+        }
+
+        /* Liste Alanları İçin Özel Sabit Boyut ve Kaydırma Çubuğu */
+        .bolum-listesi-kapsayici {
+            max-height: 120px; /* Yaklaşık 3-4 bölüm sığacak yükseklik */
+            overflow-y: auto;  /* Fazlası için kaydırma çubuğu çıkar */
+            padding-right: 4px;
+        }
+
+        .bolum-listesi-kapsayici::-webkit-scrollbar {
+            width: 4px;
+        }
+        .bolum-listesi-kapsayici::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .bolum-listesi-kapsayici::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        .bolum-listesi-kapsayici::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.4);
         }
 
         .chapter-item {
@@ -116,7 +138,7 @@
                     <img src="guncelleri.jpg" class="w-full h-full object-cover">
                 </div>
 
-                <div id="list-GÜNCELLER" class="flex flex-col gap-2.5 text-sm text-gray-300 font-normal">
+                <div id="list-GÜNCELLER" class="bolum-listesi-kapsayici flex flex-col gap-2.5 text-sm text-gray-300 font-normal w-full">
                     <!-- Dinamik yüklenecek -->
                 </div>
             </div>
@@ -132,7 +154,7 @@
                     <img src="bellekkapsulu.png" class="w-full h-full object-cover">
                 </div>
 
-                <div id="list-BELLEK KAPSÜLÜ" class="flex flex-col gap-2.5 text-sm text-gray-300 font-normal">
+                <div id="list-BELLEK KAPSÜLÜ" class="bolum-listesi-kapsayici flex flex-col gap-2.5 text-sm text-gray-300 font-normal w-full">
                     <!-- Dinamik yüklenecek -->
                 </div>
             </div>
@@ -148,7 +170,7 @@
                     <img src="birhikaye.png" class="w-full h-full object-cover">
                 </div>
 
-                <div id="list-ZORUNLU DOKUNUŞ" class="flex flex-col gap-2.5 text-sm text-gray-300 font-normal">
+                <div id="list-ZORUNLU DOKUNUŞ" class="bolum-listesi-kapsayici flex flex-col gap-2.5 text-sm text-gray-300 font-normal w-full">
                     <!-- Dinamik yüklenecek -->
                 </div>
             </div>
@@ -164,7 +186,7 @@
                     <img src="nedenmuslumanim.png" class="w-full h-full object-cover">
                 </div>
 
-                <div id="list-NEDEN MÜSLÜMANIM" class="flex flex-col gap-2.5 text-sm text-gray-300 font-normal">
+                <div id="list-NEDEN MÜSLÜMANIM" class="bolum-listesi-kapsayici flex flex-col gap-2.5 text-sm text-gray-300 font-normal w-full">
                     <!-- Dinamik yüklenecek -->
                 </div>
             </div>
@@ -211,7 +233,7 @@
 
                 <div class="flex flex-col gap-1.5">
                     <label class="text-gray-400 font-medium">Başlık / Bölüm Adı (Aynı başlığı yazarsan güncellenir)</label>
-                    <input type="text" id="newTitle" placeholder="Örn: Güncel 1 veya Mektup 2" class="w-full bg-[#1c1c22] border border-gray-800 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-pink-500/50">
+                    <input type="text" id="newTitle" placeholder="Örn: Bölüm 3 veya Kapsül 4" class="w-full bg-[#1c1c22] border border-gray-800 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-pink-500/50">
                 </div>
 
                 <div class="flex flex-col gap-1.5 flex-1">
@@ -233,7 +255,7 @@
             <div class="flex items-center justify-between border-b border-gray-800 pb-4 shrink-0">
                 <div>
                     <span id="modalCategory" class="text-xs font-semibold text-pink-400 uppercase tracking-wider block">GÜNCELLER</span>
-                    <h3 id="modalTitle" class="text-lg font-bold text-white tracking-wide">Güncel 1</h3>
+                    <h3 id="modalTitle" class="text-lg font-bold text-white tracking-wide">Bölüm Adı</h3>
                 </div>
                 <button onclick="closeReaderModal()" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 hover:text-white">
                     <i class="fa-solid fa-xmark"></i>
@@ -259,7 +281,6 @@
     <div id="toastContainer" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none"></div>
 
     <script>
-        // ŞİFREN BURADA: İleride şifreni değiştirmek istersen tırnak içindeki yazıyı değiştirmen yeterli!
         const ADMIN_PASSWORD = "Day1221";
 
         let defaultData = {
@@ -287,10 +308,8 @@
             ]
         };
 
-        // Eğer tarayıcında eskiden kalan önbellek (localStorage) varsa fazlalığı temizlemesi için sıfırlıyoruz veya güncelliyoruz.
         let savedData = JSON.parse(localStorage.getItem('dayrun_db'));
         if (savedData && savedData["GÜNCELLER"] && savedData["GÜNCELLER"].length > 2) {
-            // Eğer eski kalıntı kalmışsa varsayılan temiz veriyle güncelliyoruz
             localStorage.setItem('dayrun_db', JSON.stringify(defaultData));
         }
 
