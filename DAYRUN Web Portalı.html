@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAYRUN</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts for Serif Logo & Clean Text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:ital,wght@1,500;1,700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        logo: ['Playfair Display', 'Cinzel', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        darkBg: '#0e0e10',
+                        cardBg: '#18181c',
+                        inputBg: '#1c1c22',
+                        accentPink: '#f3a4b5',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styling for Glassmorphism & Visuals matching the reference image */
+        body {
+            background-color: #0d0e12;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .dayrun-logo {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            letter-spacing: 0.15em;
+            font-weight: 700;
+        }
+
+        /* Glass Sphere Button Effect for CEVAPLAR */
+        .glass-sphere {
+            background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.25) 0%, rgba(60, 65, 80, 0.6) 50%, rgba(15, 18, 25, 0.95) 100%);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.3), inset 0 -4px 8px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-sphere:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), inset 0 3px 6px rgba(255, 255, 255, 0.4), inset 0 -4px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .glass-sphere:active {
+            transform: scale(0.96);
+        }
+
+        /* Input glow effect */
+        .search-pill {
+            background-color: #1a1c23;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .search-pill:focus-within {
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5), 0 0 12px rgba(255, 255, 255, 0.05);
+        }
+
+        /* Custom Scrollbar for reader modals */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111216;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2d38;
+            border-radius: 3px;
+        }
+
+        /* Chapter item hover effect */
+        .chapter-item {
+            transition: all 0.2s ease;
+        }
+        .chapter-item:hover {
+            color: #ffffff;
+            transform: translateX(4px);
+        }
+
+        /* Smooth fade animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.35s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-start pb-16">
+
+    <!-- Main Outer Container with fixed maximum width matching mobile layout aesthetic -->
+    <div class="w-full max-w-md min-h-screen px-4 pt-8 flex flex-col gap-6">
+
+        <!-- LOGO HEADER -->
+        <header class="text-left pt-2 pb-1">
+            <h1 class="dayrun-logo text-3xl tracking-widest text-white italic drop-shadow-md">DAYRUN</h1>
+        </header>
+
+        <!-- HERO BANNER CARD -->
+        <div onclick="openReader('Yaratıcı\'ya Mektuplar', 'Özel Mektup 1', 'Mektup İçeriği')" 
+             class="relative w-full h-44 rounded-2xl overflow-hidden cursor-pointer shadow-2xl group transition-all duration-300 hover:brightness-110">
+            
+            <!-- Dynamic SVG SVG Aesthetic Background (Pastel arch with envelope & moon) -->
+            <svg class="w-full h-full object-cover" viewBox="0 0 400 180" preserveAspectRatio="xMidYMid slice">
+                <defs>
+                    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#fbcfe8" />
+                        <stop offset="50%" stop-color="#cbd5e1" />
+                        <stop offset="100%" stop-color="#64748b" />
+                    </linearGradient>
+                    <linearGradient id="archGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6" />
+                        <stop offset="100%" stop-color="#e2e8f0" stop-opacity="0.2" />
+                    </linearGradient>
+                    <linearGradient id="cardOverlay" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="transparent" />
+                        <stop offset="60%" stop-color="rgba(13, 14, 18, 0.4)" />
+                        <stop offset="100%" stop-color="rgba(13, 14, 18, 0.95)" />
+                    </linearGradient>
+                </defs>
+                <!-- Sky background -->
+                <rect width="400" height="180" fill="url(#skyGrad)" />
+                <!-- Celestial arch shape -->
+                <path d="M 140 180 V 70 A 60 60 0 0 1 260 70 V 180 Z" fill="url(#archGrad)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+                <!-- Crescent moon & star glow -->
+                <circle cx="310" cy="50" r="18" fill="none" stroke="#fef08a" stroke-width="2" opacity="0.8"/>
+                <circle cx="316" cy="46" r="16" fill="url(#skyGrad)"/>
+                <circle cx="200" cy="45" r="2" fill="#fff" class="animate-pulse"/>
+                <!-- Light ray -->
+                <polygon points="200,45 150,180 250,180" fill="rgba(255,255,255,0.15)"/>
+                <!-- Envelop illustration -->
+                <g transform="translate(160, 110)">
+                    <rect x="0" y="0" width="80" height="50" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1" />
+                    <path d="M 0 0 L 40 30 L 80 0" fill="none" stroke="#94a3b8" stroke-width="1.5" />
+                    <path d="M 0 50 L 30 25" fill="none" stroke="#cbd5e1" stroke-width="1" />
+                    <path d="M 80 50 L 50 25" fill="none" stroke="#cbd5e1" stroke-width="1" />
+                </g>
+            </svg>
+
+            <!-- Gradient Overlay for Crisp Text Readability -->
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0e0e12] via-transparent to-transparent opacity-90"></div>
+
+            <!-- Banner Label -->
+            <div class="absolute bottom-3 left-4 right-4 flex items-center justify-between">
+                <span class="text-white text-lg font-medium tracking-wide drop-shadow-md">
+                    Yaratıcı'ya Mektuplar
+                </span>
+                <i class="fa-solid fa-chevron-right text-xs text-gray-400 group-hover:translate-x-1 transition-transform"></i>
+            </div>
+        </div>
+
+        <!-- INTERACTIVE QUESTION BAR & CEVAPLAR SPHERE BUTTON -->
+        <div class="flex items-center gap-3 my-1">
+            <!-- Search Pill Input -->
+            <div class="search-pill flex-1 h-12 rounded-2xl flex items-center px-4 transition-all">
+                <input id="questionInput" 
+                       type="text" 
+                       placeholder="Anonim Soru Bırak..." 
+                       class="w-full bg-transparent text-sm text-gray-200 placeholder-gray-500 focus:outline-none"
+                       onkeypress="handleKeyPress(event)">
+                <button onclick="submitQuestion()" 
+                        title="Gönder"
+                        class="text-gray-400 hover:text-white transition-colors ml-2 p-1">
+                    <i class="fa-solid fa-paper-plane text-sm"></i>
+                </button>
+            </div>
+
+            <!-- Glossy Glass Ball CEVAPLAR Button -->
+            <button onclick="openAnswersModal()" 
+                    class="glass-sphere w-16 h-16 rounded-full flex items-center justify-center shrink-0 cursor-pointer text-center group">
+                <span class="text-[10px] font-bold tracking-wider text-gray-200 group-hover:text-white transition-colors leading-tight px-1">
+                    CEVAPLAR
+                </span>
+            </button>
+        </div>
+
+        <!-- SECTION 1: GÜNCELLER -->
+        <section class="flex flex-col gap-2 mt-2">
+            <h2 class="text-xs font-bold tracking-widest text-gray-300 uppercase px-1">GÜNCELLER</h2>
+            
+            <div class="flex items-center gap-5 bg-transparent p-1">
+                <!-- Thumbnail Card -->
+                <div class="w-36 h-24 rounded-2xl overflow-hidden shrink-0 relative bg-pink-200 shadow-lg group cursor-pointer"
+                     onclick="openReader('GÜNCELLER', 'Güncel 1', 'Güncel serinin ilk bölümüdür.')">
+                    <svg class="w-full h-full object-cover" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice">
+                        <!-- Pink Gradient Sky -->
+                        <defs>
+                            <linearGradient id="pinkBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#fbcfe8" />
+                                <stop offset="100%" stop-color="#f472b6" />
+                            </linearGradient>
+                        </defs>
+                        <rect width="160" height="100" fill="url(#pinkBg)" />
+                        
+                        <!-- Anime Character Illustration Silhouette/Stylized Art -->
+                        <g transform="translate(10, 10)">
+                            <!-- Pink long hair -->
+                            <path d="M 20 20 Q 35 0 50 20 Q 65 50 70 80 Q 20 80 15 50 Z" fill="#f472b6" stroke="#db2777" stroke-width="1.5"/>
+                            <!-- Face -->
+                            <path d="M 28 30 Q 38 48 48 30 Q 48 55 38 60 Q 28 55 28 30 Z" fill="#fff1f2"/>
+                            <!-- Cute eyes -->
+                            <ellipse cx="33" cy="38" rx="2" ry="3" fill="#831843"/>
+                            <ellipse cx="43" cy="38" rx="2" ry="3" fill="#831843"/>
+                            <!-- Sweater -->
+                            <path d="M 18 60 Q 38 52 58 60 L 62 90 L 14 90 Z" fill="#e0e7ff"/>
+                            <!-- Praying/hand gesture -->
+                            <path d="M 33 62 Q 38 55 43 62" fill="none" stroke="#fda4af" stroke-width="3" stroke-linecap="round"/>
+                        </g>
+
+                        <!-- Overlay Text ON Thumbnail as in screenshot -->
+                        <rect x="75" y="30" width="75" height="40" rx="4" fill="rgba(255,255,255,0.2)" />
+                        <text x="112" y="48" font-size="11" font-weight="bold" fill="#475569" text-anchor="middle" font-family="sans-serif">GÜNCEL</text>
+                        <text x="112" y="62" font-size="12" font-weight="bold" fill="#1e293b" text-anchor="middle" font-family="sans-serif">1</text>
+                    </svg>
+                </div>
+
+                <!-- Links List -->
+                <div class="flex flex-col gap-2.5 text-sm text-gray-300 font-normal">
+                    <button onclick="openReader('GÜNCELLER', 'Güncel 1', 'Güncel Serisi - Bölüm 1 içeriği burada yer alıyor.')" class="chapter-item text-left hover:text-white">Güncel 1</button>
+                    <button onclick="openReader('GÜNCELLER', 'Güncel 2', 'Güncel Serisi - Bölüm 2 içeriği burada yer alıyor.')" class="chapter-item text-left hover:text-white">Güncel 2</button>
+                    <button onclick="openReader('GÜNCELLER', 'Güncel 3', 'Güncel Serisi - Bölüm 3 içeriği burada yer alıyor.')" class="chapter-item text-left hover:text-white">Güncel 3</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: BELLEK KAPSÜLÜ -->
+        <section class="flex flex-col gap-2 mt-2">
+            <h2 class="text-xs font-bold tracking-widest text-gray-300 uppercase px-1">BELLEK KAPSÜLÜ</h2>
+            
+            <div class="flex items-center gap-5 bg-transparent p-1">
+                <!-- Thumbnail Card (Hourglass Illustration) -->
+                <div class="w-36 h-24 rounded-2xl overflow-hidden shrink-0 relative bg-slate-800 shadow-lg group cursor-pointer"
+                     onclick="openReader('BELLEK KAPSÜLÜ', 'Kapsül 1', 'Anıların saklandığı ilk kapsül.')">
+                    <svg class="w-full h-full object-cover" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice">
+                        <defs>
+                            <linearGradient id="hourglassBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#cbd5e1" />
+                                <stop offset="50%" stop-color="#e2e8f0" />
+                                <stop offset="100%" stop-color="#cbd5e1" />
+                            </linearGradient>
+                            <linearGradient id="sandGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#f472b6" />
+                                <stop offset="100%" stop-color="#38bdf8" />
+                            </linearGradient>
+                        </defs>
+                        <rect width="160" height="100" fill="url(#hourglassBg)" />
+                        
+                        <!-- Hourglass Graphic centered -->
+                        <g transform="translate(58, 12)">
+                            <!-- Top & Bottom caps -->
+                            <rect x="5" y="2" width="34" height="4" rx="2" fill="#94a3b8"/>
+                            <rect x="5" y="70" width="34" height="4" rx="2" fill="#94a3b8"/>
+                            <!-- Glass body -->
+                            <path d="M 10 6 L 34 6 L 24 38 L 34 70 L 10 70 L 20 38 Z" fill="rgba(255, 255, 255, 0.6)" stroke="#64748b" stroke-width="1.5"/>
+                            <!-- Pink Sand inside -->
+                            <path d="M 13 14 L 31 14 L 22 35 Z" fill="#f472b6" opacity="0.85"/>
+                            <path d="M 22 42 L 31 66 L 13 66 Z" fill="#38bdf8" opacity="0.85"/>
+                            <!-- Glowing sand drop -->
+                            <line x1="22" y1="35" x2="22" y2="42" stroke="#f472b6" stroke-width="1.5" stroke-dasharray="1 1"/>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- Links List -->
+                <div class="flex flex-col gap-2.5 text-sm text-gray-300 font-normal">
+                    <button onclick="openReader('BELLEK KAPSÜLÜ', 'Kapsül 1', 'Zamanın ötesinden gelen ilk mesaj.')" class="chapter-item text-left hover:text-white">Kapsül 1</button>
+                    <button onclick="openReader('BELLEK KAPSÜLÜ', 'Kapsül 2', 'Unutulmayan hatıraların kaydı.')" class="chapter-item text-left hover:text-white">Kapsül 2</button>
+                    <button onclick="openReader('BELLEK KAPSÜLÜ', 'Kapsül 3', 'Geleceğe bırakılan notlar.')" class="chapter-item text-left hover:text-white">Kapsül 3</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: ZORUNLU DOKUNUŞ -->
+        <section class="flex flex-col gap-2 mt-2">
+            <h2 class="text-xs font-bold tracking-widest text-gray-300 uppercase px-1">ZORUNLU DOKUNUŞ</h2>
+            
+            <div class="flex items-center gap-5 bg-transparent p-1">
+                <!-- Thumbnail Card (Romance Webtoon Illustration) -->
+                <div class="w-36 h-24 rounded-2xl overflow-hidden shrink-0 relative bg-amber-100 shadow-lg group cursor-pointer"
+                     onclick="openReader('ZORUNLU DOKUNUŞ', 'Bölüm 1', 'Zorunlu Dokunuş Webtoon 1. Bölüm')">
+                    <svg class="w-full h-full object-cover" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice">
+                        <defs>
+                            <linearGradient id="romanceBg" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#fce7f3" />
+                                <stop offset="100%" stop-color="#fbcfe8" />
+                            </linearGradient>
+                        </defs>
+                        <rect width="160" height="100" fill="url(#romanceBg)" />
+                        
+                        <!-- Couple Illustration -->
+                        <g>
+                            <!-- Man with suit & dark hair (Right) -->
+                            <path d="M 90 20 Q 110 10 130 30 L 150 100 L 70 100 Z" fill="#1e293b"/> <!-- Suit -->
+                            <path d="M 95 30 Q 110 20 120 35 L 110 50 Z" fill="#f8fafc"/> <!-- Shirt collar -->
+                            <path d="M 105 40 L 108 70" stroke="#7f1d1d" stroke-width="3"/> <!-- Tie -->
+                            <ellipse cx="108" cy="22" rx="14" ry="18" fill="#fbcfe8"/> <!-- Male face -->
+                            <path d="M 94 18 Q 110 5 124 20 Q 112 12 96 22 Z" fill="#0f172a"/> <!-- Hair -->
+
+                            <!-- Woman with long brown hair (Left) -->
+                            <path d="M 10 30 Q 30 10 60 40 L 70 100 L 0 100 Z" fill="#f472b6" opacity="0.3"/>
+                            <ellipse cx="42" cy="32" rx="13" ry="16" fill="#fde8e8"/>
+                            <path d="M 28 25 Q 42 10 56 26 Q 58 55 58 85 Q 26 80 28 25 Z" fill="#78350f"/> <!-- Brown hair -->
+                            <ellipse cx="42" cy="32" rx="11" ry="14" fill="#fde8e8"/> <!-- Face front -->
+                        </g>
+
+                        <!-- Title Badge Overlay in Webtoon Style -->
+                        <g transform="translate(50, 45)">
+                            <rect x="0" y="0" width="100" height="38" rx="6" fill="rgba(255, 255, 255, 0.75)" stroke="#f472b6" stroke-width="1"/>
+                            <text x="50" y="16" font-size="11" font-weight="bold" fill="#be185d" text-anchor="middle" font-family="'Playfair Display', serif">Zorunlu</text>
+                            <text x="50" y="30" font-size="11" font-weight="bold" fill="#be185d" text-anchor="middle" font-family="'Playfair Display', serif">Dokunuş</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- Links List -->
+                <div class="flex flex-col gap-2.5 text-sm text-gray-300 font-normal">
+                    <button onclick="openReader('ZORUNLU DOKUNUŞ', 'Bölüm 1', 'Zorunlu Dokunuş - 1. Bölüm Webtoon Oku.')" class="chapter-item text-left hover:text-white">Bölüm 1</button>
+                    <button onclick="openReader('ZORUNLU DOKUNUŞ', 'Bölüm 2', 'Zorunlu Dokunuş - 2. Bölüm Webtoon Oku.')" class="chapter-item text-left hover:text-white">Bölüm 2</button>
+                    <button onclick="openReader('ZORUNLU DOKUNUŞ', 'Bölüm 3', 'Zorunlu Dokunuş - 3. Bölüm Webtoon Oku.')" class="chapter-item text-left hover:text-white">Bölüm 3</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: NEDEN MÜSLÜMANIM -->
+        <section class="flex flex-col gap-2 mt-2">
+            <h2 class="text-xs font-bold tracking-widest text-gray-300 uppercase px-1">NEDEN MÜSLÜMANIM</h2>
+            
+            <div class="flex items-center gap-5 bg-transparent p-1">
+                <!-- Thumbnail Card (Serene Sunset by Water with Hijab silhouette) -->
+                <div class="w-36 h-24 rounded-2xl overflow-hidden shrink-0 relative bg-indigo-900 shadow-lg group cursor-pointer"
+                     onclick="openReader('NEDEN MÜSLÜMANIM', 'Varan 1', 'Neden Müslümanım serisinin ilk yazısı.')">
+                    <svg class="w-full h-full object-cover" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice">
+                        <defs>
+                            <linearGradient id="sunsetBg" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#fbcfe8" />
+                                <stop offset="40%" stop-color="#fed7aa" />
+                                <stop offset="70%" stop-color="#bfdbfe" />
+                                <stop offset="100%" stop-color="#93c5fd" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Sky & Reflection Gradient -->
+                        <rect width="160" height="100" fill="url(#sunsetBg)" />
+                        
+                        <!-- Horizon & Calm Water Ripples -->
+                        <line x1="0" y1="65" x2="160" y2="65" stroke="#60a5fa" stroke-width="1"/>
+                        <ellipse cx="80" cy="72" rx="40" ry="2" fill="rgba(255,255,255,0.4)"/>
+                        <ellipse cx="80" cy="80" rx="60" ry="3" fill="rgba(255,255,255,0.2)"/>
+
+                        <!-- Figure in Hijab Sitting Serenely facing water -->
+                        <g transform="translate(62, 32)">
+                            <!-- Hijab Head -->
+                            <path d="M 18 10 Q 28 2 38 10 Q 42 25 38 32 Q 28 35 18 32 Q 14 25 18 10 Z" fill="#94a3b8"/>
+                            <!-- Shoulders/Dress -->
+                            <path d="M 10 32 Q 28 28 46 32 L 52 48 Q 28 52 4 48 Z" fill="#64748b"/>
+                        </g>
+                    </svg>
+                </div>
+
+                <!-- Links List -->
+                <div class="flex flex-col gap-2.5 text-sm text-gray-300 font-normal">
+                    <button onclick="openReader('NEDEN MÜSLÜMANIM', 'Varan 1', 'Neden Müslümanım? - Varan 1 detaylı anlatımı.')" class="chapter-item text-left hover:text-white">Varan 1</button>
+                    <button onclick="openReader('NEDEN MÜSLÜMANIM', 'Varan 2', 'Neden Müslümanım? - Varan 2 detaylı anlatımı.')" class="chapter-item text-left hover:text-white">Varan 2</button>
+                    <button onclick="openReader('NEDEN MÜSLÜMANIM', 'Varan 3', 'Neden Müslümanım? - Varan 3 detaylı anlatımı.')" class="chapter-item text-left hover:text-white">Varan 3</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="mt-8 mb-4 text-center text-xs text-gray-600 font-light">
+            &copy; 2026 DAYRUN. Tüm Hakları Saklıdır.
+        </footer>
+    </div>
+
+    <!-- MODAL 1: ANSWERS / CEVAPLAR MODAL -->
+    <div id="answersModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-[#161820] border border-gray-800 w-full max-w-md rounded-3xl p-6 shadow-2xl flex flex-col gap-4 animate-fade-in max-h-[85vh]">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+                <div class="flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full bg-pink-400 animate-ping"></div>
+                    <h3 class="text-base font-bold text-white tracking-wide">CEVAPLAR & ANONYMOUS Q&A</h3>
+                </div>
+                <button onclick="closeAnswersModal()" class="text-gray-400 hover:text-white p-1">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Answers List Container -->
+            <div id="questionsContainer" class="flex flex-col gap-3 overflow-y-auto pr-1 my-2">
+                <!-- Example Pre-filled Q&As -->
+                <div class="bg-[#1c1f2b] p-4 rounded-2xl border border-gray-800/60 flex flex-col gap-2">
+                    <div class="flex items-center justify-between text-xs text-pink-400 font-medium">
+                        <span><i class="fa-regular fa-circle-question mr-1"></i> Anonim Soru</span>
+                        <span class="text-gray-500">Bugün</span>
+                    </div>
+                    <p class="text-sm text-gray-200">Bölümler hangi günlerde güncelleniyor acaba?</p>
+                    <div class="mt-2 pt-2 border-t border-gray-800 text-xs text-gray-400 flex flex-col gap-1">
+                        <span class="font-semibold text-gray-300"><i class="fa-solid fa-reply text-pink-400 mr-1"></i> DAYRUN Yanıtı:</span>
+                        <p class="text-gray-300 italic">"Yeni güncellemeler ve kapsüller genellikle her hafta sonu eklenmektedir!"</p>
+                    </div>
+                </div>
+
+                <div class="bg-[#1c1f2b] p-4 rounded-2xl border border-gray-800/60 flex flex-col gap-2">
+                    <div class="flex items-center justify-between text-xs text-pink-400 font-medium">
+                        <span><i class="fa-regular fa-circle-question mr-1"></i> Anonim Soru</span>
+                        <span class="text-gray-500">Dün</span>
+                    </div>
+                    <p class="text-sm text-gray-200">Zorunlu Dokunuş 4. Bölüm ne zaman gelecek?</p>
+                    <div class="mt-2 pt-2 border-t border-gray-800 text-xs text-gray-400 flex flex-col gap-1">
+                        <span class="font-semibold text-gray-300"><i class="fa-solid fa-reply text-pink-400 mr-1"></i> DAYRUN Yanıtı:</span>
+                        <p class="text-gray-300 italic">"4. bölüm çizimleri tamamlanmak üzere, çok yakında yayında!"</p>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="closeAnswersModal()" class="w-full py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-xl text-sm font-medium transition-colors">
+                Kapat
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL 2: CONTENT / CHAPTER READER MODAL -->
+    <div id="readerModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-[#14151b] border border-gray-800 w-full max-w-md h-[88vh] rounded-3xl p-6 shadow-2xl flex flex-col justify-between animate-fade-in relative overflow-hidden">
+            
+            <!-- Top Controls Header -->
+            <div class="flex items-center justify-between border-b border-gray-800 pb-4 shrink-0">
+                <div>
+                    <span id="modalCategory" class="text-xs font-semibold text-pink-400 uppercase tracking-wider block">GÜNCELLER</span>
+                    <h3 id="modalTitle" class="text-lg font-bold text-white tracking-wide">Güncel 1</h3>
+                </div>
+                <button onclick="closeReaderModal()" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 hover:text-white">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Scrollable Content Body -->
+            <div class="flex-1 overflow-y-auto py-6 pr-1 flex flex-col gap-4 text-gray-300 text-sm leading-relaxed" id="readerBody">
+                <p class="text-gray-400 italic">İçerik yükleniyor...</p>
+            </div>
+
+            <!-- Bottom Action Controls -->
+            <div class="pt-3 border-t border-gray-800 flex items-center justify-between shrink-0 text-xs text-gray-400">
+                <button onclick="toast('Önceki bölüm bulunmuyor')" class="hover:text-white px-3 py-2 rounded-lg bg-gray-900 border border-gray-800">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Önceki
+                </button>
+                <span>DAYRUN Reader</span>
+                <button onclick="toast('Sonraki bölüme geçildi')" class="hover:text-white px-3 py-2 rounded-lg bg-gray-900 border border-gray-800">
+                    Sonraki <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toastContainer" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none"></div>
+
+    <script>
+        // Store submitted user questions in memory
+        const userQuestions = [];
+
+        // Submit Anonymous Question
+        function submitQuestion() {
+            const input = document.getElementById('questionInput');
+            const text = input.value.trim();
+
+            if (!text) {
+                toast('Lütfen bir soru yazın!');
+                return;
+            }
+
+            // Create new question object
+            const newQ = {
+                id: Date.now(),
+                question: text,
+                time: 'Şimdi',
+                answer: 'Sorunuz iletildi, kısa süre içinde yanıtlanacaktır.'
+            };
+
+            userQuestions.unshift(newQ);
+            renderQuestions();
+
+            input.value = '';
+            toast('Sorunuz anonim olarak iletildi! ✨');
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                submitQuestion();
+            }
+        }
+
+        // Render questions inside CEVAPLAR Modal
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            
+            // Build dynamically added items HTML
+            const userHTML = userQuestions.map(q => `
+                <div class="bg-[#1c1f2b] p-4 rounded-2xl border border-pink-500/30 flex flex-col gap-2 animate-fade-in">
+                    <div class="flex items-center justify-between text-xs text-pink-400 font-medium">
+                        <span><i class="fa-regular fa-circle-question mr-1"></i> Sizin Sorunuz</span>
+                        <span class="text-gray-500">${q.time}</span>
+                    </div>
+                    <p class="text-sm text-gray-100 font-medium">${escapeHtml(q.question)}</p>
+                    <div class="mt-2 pt-2 border-t border-gray-800 text-xs text-gray-400 flex flex-col gap-1">
+                        <span class="font-semibold text-pink-300"><i class="fa-solid fa-reply text-pink-400 mr-1"></i> DAYRUN Yanıtı:</span>
+                        <p class="text-gray-300 italic">${q.answer}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // Pre-existing static Q&A demo content
+            const defaultHTML = `
+                <div class="bg-[#1c1f2b] p-4 rounded-2xl border border-gray-800/60 flex flex-col gap-2">
+                    <div class="flex items-center justify-between text-xs text-pink-400 font-medium">
+                        <span><i class="fa-regular fa-circle-question mr-1"></i> Anonim Soru</span>
+                        <span class="text-gray-500">Bugün</span>
+                    </div>
+                    <p class="text-sm text-gray-200">Bölümler hangi günlerde güncelleniyor acaba?</p>
+                    <div class="mt-2 pt-2 border-t border-gray-800 text-xs text-gray-400 flex flex-col gap-1">
+                        <span class="font-semibold text-gray-300"><i class="fa-solid fa-reply text-pink-400 mr-1"></i> DAYRUN Yanıtı:</span>
+                        <p class="text-gray-300 italic">"Yeni güncellemeler ve kapsüller genellikle her hafta sonu eklenmektedir!"</p>
+                    </div>
+                </div>
+
+                <div class="bg-[#1c1f2b] p-4 rounded-2xl border border-gray-800/60 flex flex-col gap-2">
+                    <div class="flex items-center justify-between text-xs text-pink-400 font-medium">
+                        <span><i class="fa-regular fa-circle-question mr-1"></i> Anonim Soru</span>
+                        <span class="text-gray-500">Dün</span>
+                    </div>
+                    <p class="text-sm text-gray-200">Zorunlu Dokunuş 4. Bölüm ne zaman gelecek?</p>
+                    <div class="mt-2 pt-2 border-t border-gray-800 text-xs text-gray-400 flex flex-col gap-1">
+                        <span class="font-semibold text-gray-300"><i class="fa-solid fa-reply text-pink-400 mr-1"></i> DAYRUN Yanıtı:</span>
+                        <p class="text-gray-300 italic">"4. bölüm çizimleri tamamlanmak üzere, çok yakında yayında!"</p>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = userHTML + defaultHTML;
+        }
+
+        // Open Answers Modal
+        function openAnswersModal() {
+            renderQuestions();
+            document.getElementById('answersModal').classList.remove('hidden');
+        }
+
+        function closeAnswersModal() {
+            document.getElementById('answersModal').classList.add('hidden');
+        }
+
+        // Open Reader Modal
+        function openReader(category, title, summary) {
+            document.getElementById('modalCategory').innerText = category;
+            document.getElementById('modalTitle').innerText = title;
+
+            let contentHTML = '';
+
+            if (category === 'ZORUNLU DOKUNUŞ') {
+                contentHTML = `
+                    <div class="bg-gray-900 p-4 rounded-2xl border border-gray-800 text-center text-xs text-pink-300 mb-2">
+                        <i class="fa-solid fa-book-open mr-1"></i> Webtoon Görsel Okuma Modu
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <div class="w-full h-64 bg-gradient-to-b from-pink-900/40 to-purple-900/40 rounded-2xl border border-pink-500/20 flex flex-col items-center justify-center p-6 text-center">
+                            <span class="text-3xl mb-2">✨</span>
+                            <h4 class="text-lg font-bold text-white mb-1">${title}</h4>
+                            <p class="text-xs text-gray-400">${summary}</p>
+                        </div>
+                        <p class="p-4 bg-[#1a1c24] rounded-2xl border border-gray-800 text-gray-300 text-xs leading-relaxed">
+                            Karakterlerimizin yolları beklenmedik bir anda kesişiyor. "Her dokunuş bir kader çizgisini yeniden belirler..."
+                        </p>
+                    </div>
+                `;
+            } else if (category === "Yaratıcı'ya Mektuplar") {
+                contentHTML = `
+                    <div class="bg-gradient-to-r from-pink-950/40 to-slate-900/60 p-5 rounded-2xl border border-pink-500/20 flex flex-col gap-3">
+                        <div class="text-pink-300 text-xs font-serif italic text-right">Sevgili Yaratıcı'ya...</div>
+                        <p class="text-gray-200 text-sm leading-relaxed font-serif italic">
+                            "Gökyüzünün her tonunda seni aramak, gece çöktüğünde yıldızların sessizliğinde seni dinlemek gibi bir duygu bu. Yüreğimin en gizli köşesindeki duaları sadece senin duyduğunu bilmenin huzuruyla yazıyorum..."
+                        </p>
+                    </div>
+                `;
+            } else {
+                contentHTML = `
+                    <div class="p-4 bg-[#1a1c24] rounded-2xl border border-gray-800 flex flex-col gap-3">
+                        <h4 class="text-white font-semibold text-base">${title}</h4>
+                        <p class="text-gray-300 text-xs leading-relaxed">${summary}</p>
+                        <p class="text-gray-400 text-xs leading-relaxed mt-2">
+                            DAYRUN platformunda yayınlanan bu içerik okuyuculara özel olarak hazırlanmıştır. İçeriğin devamı ve yeni yayınlar için takipte kalın.
+                        </p>
+                    </div>
+                `;
+            }
+
+            document.getElementById('readerBody').innerHTML = contentHTML;
+            document.getElementById('readerModal').classList.remove('hidden');
+        }
+
+        function closeReaderModal() {
+            document.getElementById('readerModal').classList.add('hidden');
+        }
+
+        // Custom Toast Notification
+        function toast(msg) {
+            const container = document.getElementById('toastContainer');
+            const toastEl = document.createElement('div');
+            toastEl.className = 'bg-gray-800/90 text-white text-xs px-4 py-2.5 rounded-full border border-gray-700 shadow-xl backdrop-blur-md animate-fade-in my-1 text-center';
+            toastEl.innerText = msg;
+            
+            container.appendChild(toastEl);
+
+            setTimeout(() => {
+                toastEl.style.opacity = '0';
+                toastEl.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => toastEl.remove(), 300);
+            }, 2500);
+        }
+
+        // Helper to escape HTML characters
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+    </script>
+</body>
+</html>
