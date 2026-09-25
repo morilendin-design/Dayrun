@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: senin-github-kullanici-adin/Dayrun # Buraya kendi GitHub kullanıcı adını ve depo adını yaz (Örn: morilendin-design/Dayrun)
+  repo: morilendin-design/Dayrun
   branch: main
 
 media_folder: "images"
@@ -8,7 +8,7 @@ public_folder: "/images"
 
 collections:
   - name: "icerikler"
-  - label: "İçerikler"
+    label: "İçerikler"
     folder: "content"
     create: true
     slug: "{{slug}}"
