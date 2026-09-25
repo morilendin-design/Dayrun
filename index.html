@@ -51,29 +51,19 @@
             font-weight: 700;
         }
 
-        /* Genel Scrollbar */
         ::-webkit-scrollbar {
-            width: 4px;
+            width: 5px;
         }
         ::-webkit-scrollbar-track {
-            background: transparent;
+            background: #111216;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
-        }
-
-        /* Liste Alanları İçin Kusursuz Sabit Boyut ve Kaydırma Alanı */
-        .bolum-listesi-kapsayici {
-            height: 96px;      /* Sol taraftaki resmin yüksekliğiyle birebir (h-24 = 96px) */
-            max-height: 96px;
-            overflow-y: auto;  /* Fazla bölümler için kaydırma çubuğu */
-            padding-right: 4px;
+            background: #2a2d38;
+            border-radius: 3px;
         }
 
         .chapter-item {
             transition: all 0.2s ease;
-            line-height: 1.5;
         }
         .chapter-item:hover {
             color: #ffffff;
@@ -120,14 +110,22 @@
         <section class="flex flex-col gap-2 mt-2">
             <h2 class="text-xs font-bold tracking-widest text-gray-300 uppercase px-1">GÜNCELLER</h2>
             
-            <div class="flex items-center gap-5 bg-transparent p-1">
+            <div class="flex items-start gap-5 bg-transparent p-1">
                 <div class="w-36 h-24 rounded-2xl overflow-hidden shrink-0 relative bg-pink-200 shadow-lg group cursor-pointer"
                      onclick="openFirstItem('GÜNCELLER')">
                     <img src="guncelleri.jpg" class="w-full h-full object-cover">
                 </div>
 
-                <div id="list-GÜNCELLER" class="bolum-listesi-kapsayici flex flex-col gap-2 text-sm text-gray-300 font-normal w-full">
-                    <!-- Dinamik yüklenecek -->
+                <div class="flex flex-col gap-1.5 text-sm text-gray-300 font-normal w-full pt-1">
+                    <div id="list-GÜNCELLER" class="flex flex-col gap-1.5">
+                        <!-- Dinamik yüklenecek (en son 2-3 tane) -->
+                    </div>
+                    <div id="more-GÜNCELLER" class="hidden mt-1">
+                        <button onclick="openAllListModal('GÜNCELLER')" class="text-xs text-pink-400 hover:text-pink-300 font-medium flex items-center gap-1 transition-colors">
+                            <span>Tümünü Gör</span>
+                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -136,14 +134,22 @@
         <section class="flex flex-col gap-2 mt-2">
             <h2 class="text-xs font-bold tracking-widest text-gray-300 uppercase px-1">BELLEK KAPSÜLÜ</h2>
             
-            <div class="flex items-center gap-5 bg-transparent p-1">
+            <div class="flex items-start gap-5 bg-transparent p-1">
                 <div class="w-36 h-24 rounded-2xl overflow-hidden shrink-0 relative bg-slate-800 shadow-lg group cursor-pointer"
                      onclick="openFirstItem('BELLEK KAPSÜLÜ')">
                     <img src="bellekkapsulu.png" class="w-full h-full object-cover">
                 </div>
 
-                <div id="list-BELLEK KAPSÜLÜ" class="bolum-listesi-kapsayici flex flex-col gap-2 text-sm text-gray-300 font-normal w-full">
-                    <!-- Dinamik yüklenecek -->
+                <div class="flex flex-col gap-1.5 text-sm text-gray-300 font-normal w-full pt-1">
+                    <div id="list-BELLEK KAPSÜLÜ" class="flex flex-col gap-1.5">
+                        <!-- Dinamik yüklenecek -->
+                    </div>
+                    <div id="more-BELLEK KAPSÜLÜ" class="hidden mt-1">
+                        <button onclick="openAllListModal('BELLEK KAPSÜLÜ')" class="text-xs text-pink-400 hover:text-pink-300 font-medium flex items-center gap-1 transition-colors">
+                            <span>Tümünü Gör</span>
+                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -152,14 +158,22 @@
         <section class="flex flex-col gap-2 mt-2">
             <h2 class="text-xs font-bold tracking-widest text-gray-300 uppercase px-1">ZORUNLU DOKUNUŞ</h2>
             
-            <div class="flex items-center gap-5 bg-transparent p-1">
+            <div class="flex items-start gap-5 bg-transparent p-1">
                 <div class="w-36 h-24 rounded-2xl overflow-hidden shrink-0 relative bg-amber-100 shadow-lg group cursor-pointer"
                      onclick="openFirstItem('ZORUNLU DOKUNUŞ')">
                     <img src="birhikaye.png" class="w-full h-full object-cover">
                 </div>
 
-                <div id="list-ZORUNLU DOKUNUŞ" class="bolum-listesi-kapsayici flex flex-col gap-2 text-sm text-gray-300 font-normal w-full">
-                    <!-- Dinamik yüklenecek -->
+                <div class="flex flex-col gap-1.5 text-sm text-gray-300 font-normal w-full pt-1">
+                    <div id="list-ZORUNLU DOKUNUŞ" class="flex flex-col gap-1.5">
+                        <!-- Dinamik yüklenecek -->
+                    </div>
+                    <div id="more-ZORUNLU DOKUNUŞ" class="hidden mt-1">
+                        <button onclick="openAllListModal('ZORUNLU DOKUNUŞ')" class="text-xs text-pink-400 hover:text-pink-300 font-medium flex items-center gap-1 transition-colors">
+                            <span>Tümünü Gör</span>
+                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -168,14 +182,22 @@
         <section class="flex flex-col gap-2 mt-2">
             <h2 class="text-xs font-bold tracking-widest text-gray-300 uppercase px-1">NEDEN MÜSLÜMANIM</h2>
             
-            <div class="flex items-center gap-5 bg-transparent p-1">
+            <div class="flex items-start gap-5 bg-transparent p-1">
                 <div class="w-36 h-24 rounded-2xl overflow-hidden shrink-0 relative bg-indigo-900 shadow-lg group cursor-pointer"
                      onclick="openFirstItem('NEDEN MÜSLÜMANIM')">
                     <img src="nedenmuslumanim.png" class="w-full h-full object-cover">
                 </div>
 
-                <div id="list-NEDEN MÜSLÜMANIM" class="bolum-listesi-kapsayici flex flex-col gap-2 text-sm text-gray-300 font-normal w-full">
-                    <!-- Dinamik yüklenecek -->
+                <div class="flex flex-col gap-1.5 text-sm text-gray-300 font-normal w-full pt-1">
+                    <div id="list-NEDEN MÜSLÜMANIM" class="flex flex-col gap-1.5">
+                        <!-- Dinamik yüklenecek -->
+                    </div>
+                    <div id="more-NEDEN MÜSLÜMANIM" class="hidden mt-1">
+                        <button onclick="openAllListModal('NEDEN MÜSLÜMANIM')" class="text-xs text-pink-400 hover:text-pink-300 font-medium flex items-center gap-1 transition-colors">
+                            <span>Tümünü Gör</span>
+                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -236,7 +258,30 @@
         </div>
     </div>
 
-    <!-- 3. READER MODAL -->
+    <!-- 3. TÜMÜNÜ GÖR MODALI (ALL LIST MODAL) -->
+    <div id="allListModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-[#14151b] border border-gray-800 w-full max-w-md h-[75vh] rounded-3xl p-6 shadow-2xl flex flex-col justify-between animate-fade-in relative overflow-hidden">
+            <div class="flex items-center justify-between border-b border-gray-800 pb-4 shrink-0">
+                <div>
+                    <span class="text-xs font-semibold text-pink-400 uppercase tracking-wider block">Kategori Arşivi</span>
+                    <h3 id="allListCategoryTitle" class="text-lg font-bold text-white tracking-wide">Kategori Adı</h3>
+                </div>
+                <button onclick="closeAllListModal()" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 hover:text-white">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto py-4 flex flex-col gap-2.5 text-gray-300 text-sm" id="allListBody">
+                <!-- Tüm bölümler buraya liste şeklinde dökülecek -->
+            </div>
+
+            <div class="pt-3 border-t border-gray-800 text-center shrink-0 text-xs text-gray-500">
+                DAYRUN Arşiv
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. READER MODAL -->
     <div id="readerModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="bg-[#14151b] border border-gray-800 w-full max-w-md h-[88vh] rounded-3xl p-6 shadow-2xl flex flex-col justify-between animate-fade-in relative overflow-hidden">
             
@@ -296,27 +341,62 @@
             ]
         };
 
-        let savedData = JSON.parse(localStorage.getItem('dayrun_db'));
-        if (savedData && savedData["GÜNCELLER"] && savedData["GÜNCELLER"].length > 2) {
-            localStorage.setItem('dayrun_db', JSON.stringify(defaultData));
-        }
-
         let dbContent = JSON.parse(localStorage.getItem('dayrun_db')) || defaultData;
 
         function renderLists() {
             for (let cat in dbContent) {
                 let container = document.getElementById('list-' + cat);
+                let moreBtnContainer = document.getElementById('more-' + cat);
+                
                 if (container) {
                     container.innerHTML = '';
-                    dbContent[cat].slice().reverse().forEach(item => {
+                    let items = dbContent[cat].slice().reverse(); // En son eklenen en üstte
+                    
+                    // Ana sayfada sadece en son 2 tanesini gösterelim
+                    let visibleItems = items.slice(0, 2);
+                    
+                    visibleItems.forEach(item => {
                         let btn = document.createElement('button');
-                        btn.className = 'chapter-item text-left hover:text-white block truncate w-full';
+                        btn.className = 'chapter-item text-left hover:text-white block truncate w-full py-0.5';
                         btn.innerText = item.title;
                         btn.onclick = () => openReader(cat, item.title, item.body);
                         container.appendChild(btn);
                     });
+
+                    // Eğer 2'den fazla bölüm varsa "Tümünü Gör" butonunu göster
+                    if (moreBtnContainer) {
+                        if (items.length > 2) {
+                            moreBtnContainer.classList.remove('hidden');
+                        } else {
+                            moreBtnContainer.classList.add('hidden');
+                        }
+                    }
                 }
             }
+        }
+
+        function openAllListModal(category) {
+            document.getElementById('allListCategoryTitle').innerText = category;
+            let bodyContainer = document.getElementById('allListBody');
+            bodyContainer.innerHTML = '';
+
+            let items = dbContent[category].slice().reverse();
+            items.forEach(item => {
+                let btn = document.createElement('button');
+                btn.className = 'chapter-item text-left text-gray-300 hover:text-white bg-[#1a1c24] border border-gray-800/60 p-3 rounded-xl block w-full transition-all';
+                btn.innerHTML = `<span class="font-medium text-white">${item.title}</span>`;
+                btn.onclick = () => {
+                    closeAllListModal();
+                    openReader(category, item.title, item.body);
+                };
+                bodyContainer.appendChild(btn);
+            });
+
+            document.getElementById('allListModal').classList.remove('hidden');
+        }
+
+        function closeAllListModal() {
+            document.getElementById('allListModal').classList.add('hidden');
         }
 
         function openLoginModal() {
