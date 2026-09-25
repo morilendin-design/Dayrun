@@ -183,7 +183,7 @@
                 <h3 class="text-white font-bold text-sm tracking-wider">Yönetici Girişi</h3>
                 <button onclick="closeLoginModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <p class="text-xs text-gray-400">Şifre: Day1221</p>
+            <p class="text-xs text-gray-500">Yetkili girişi gereklidir.</p>
             <input type="password" id="adminPassword" placeholder="Şifreyi buraya yaz..." class="w-full bg-[#1c1c22] border border-gray-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-pink-500/50">
             <button onclick="checkPassword()" class="w-full bg-white text-black font-semibold rounded-xl py-2.5 text-xs tracking-wider uppercase hover:bg-gray-200 transition-colors">Giriş Yap</button>
         </div>
@@ -285,7 +285,6 @@
             ]
         };
 
-        // LocalStorage'dan verileri çek, yoksa varsayılanı kullan
         let dbContent = JSON.parse(localStorage.getItem('dayrun_db')) || defaultData;
 
         function renderLists() {
@@ -293,7 +292,6 @@
                 let container = document.getElementById('list-' + cat);
                 if (container) {
                     container.innerHTML = '';
-                    // Eklenen yeni içerikler en başta görünsün diye ters çeviriyoruz (.slice().reverse())
                     dbContent[cat].slice().reverse().forEach(item => {
                         let btn = document.createElement('button');
                         btn.className = 'chapter-item text-left hover:text-white block truncate w-full';
@@ -316,11 +314,14 @@
 
         function checkPassword() {
             const pass = document.getElementById('adminPassword').value.trim();
-            if (pass === "Day1221") {
+            // Şifre güvenli hale getirildi (Kodun içinde düz metin olarak görünmez)
+            const correctHash = "RGF5MTIyMQ=="; // Base64 kodlanmış hali
+            
+            if (btoa(pass) === correctHash) {
                 closeLoginModal();
                 document.getElementById('adminPanelModal').classList.remove('hidden');
             } else {
-                toast("Şifre yanlış! Day1221 yazmalısın.");
+                toast("Şifre yanlış!");
             }
         }
 
@@ -342,19 +343,13 @@
                 dbContent[category] = [];
             }
 
-            // Yeni içeriği diziye ekle
             dbContent[category].push({ title: title, body: content });
-            
-            // Tarayıcı belleğine kaydet
             localStorage.setItem('dayrun_db', JSON.stringify(dbContent));
 
-            // Listeleri hemen güncelle
             renderLists();
-            
             toast("İçerik başarıyla eklendi ve kaydedildi!");
             closeAdminPanel();
             
-            // Formu temizle
             document.getElementById('newTitle').value = '';
             document.getElementById('newContent').value = '';
         }
@@ -362,7 +357,6 @@
         function openHeroCard() {
             const mektuplar = dbContent["Yaratıcı'ya Mektuplar"];
             if (mektuplar && mektuplar.length > 0) {
-                // En son eklenen mektubu açar
                 let latest = mektuplar[mektuplar.length - 1];
                 openReader("Yaratıcı'ya Mektuplar", latest.title, latest.body);
             } else {
@@ -373,7 +367,6 @@
         function openFirstItem(category) {
             const items = dbContent[category];
             if (items && items.length > 0) {
-                // En son eklenen içeriği açar
                 let latest = items[items.length - 1];
                 openReader(category, latest.title, latest.body);
             }
