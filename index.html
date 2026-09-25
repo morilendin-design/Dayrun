@@ -184,7 +184,7 @@
                 <button onclick="closeLoginModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <p class="text-xs text-gray-400">Yeni mektup/yazı eklemek için şifreni gir.</p>
-            <input type="password" id="adminPassword" placeholder="Şifre..." class="w-full bg-[#1c1c22] border border-gray-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-pink-500/50">
+            <input type="password" id="adminPassword" placeholder="Şifre..." class="w-full bg-[#1c1c22] border border-gray-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-pink-500/50" onkeypress="handlePasswordKey(event)">
             <button onclick="checkPassword()" class="w-full bg-white text-black font-semibold rounded-xl py-2.5 text-xs tracking-wider uppercase hover:bg-gray-200 transition-colors">Giriş Yap</button>
         </div>
     </div>
@@ -259,7 +259,7 @@
     <div id="toastContainer" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none"></div>
 
     <script>
-        // Şifre güncellendi: Day1221
+        // Kesin Yönetici Şifresi
         const ADMIN_PASSWORD = "Day1221"; 
 
         let dbContent = JSON.parse(localStorage.getItem('dayrun_db')) || {
@@ -307,10 +307,17 @@
         function openLoginModal() {
             document.getElementById('adminPassword').value = '';
             document.getElementById('loginModal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('adminPassword').focus(), 100);
         }
 
         function closeLoginModal() {
             document.getElementById('loginModal').classList.add('hidden');
+        }
+
+        function handlePasswordKey(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
         }
 
         function checkPassword() {
@@ -319,7 +326,7 @@
                 closeLoginModal();
                 document.getElementById('adminPanelModal').classList.remove('hidden');
             } else {
-                toast("Yanlış şifre!");
+                toast("Yanlış şifre! (Day1221)");
             }
         }
 
@@ -345,7 +352,7 @@
             localStorage.setItem('dayrun_db', JSON.stringify(dbContent));
 
             renderLists();
-            toast("İçerçi başarıyla eklendi ve kaydedildi!");
+            toast("İçerik başarıyla eklendi ve kaydedildi!");
             closeAdminPanel();
             
             document.getElementById('newTitle').value = '';
@@ -363,7 +370,9 @@
 
         function openFirstItem(category) {
             const items = dbContent[category];
-            if (items && items.length > 0) {
+            if (items && items.length > 1) {
+                openReader(category, items[1].title, items[1].body);
+            } else if (items && items.length > 0) {
                 openReader(category, items[0].title, items[0].body);
             }
         }
