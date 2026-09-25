@@ -1,22 +1,18 @@
 backend:
-  name: git-gateway
-  branch: main # ya da master hangi kolu kullanıyorsan
+  name: github
+  repo: senin-github-kullanici-adin/Dayrun # Buraya kendi GitHub kullanıcı adını ve depo adını yaz (Örn: morilendin-design/Dayrun)
+  branch: main
 
 media_folder: "images"
 public_folder: "/images"
 
 collections:
   - name: "icerikler"
-    label: "İçerikler"
+  - label: "İçerikler"
     folder: "content"
     create: true
     slug: "{{slug}}"
     fields:
       - { label: "Başlık", name: "title", widget: "string" }
-      - { 
-          label: "Tür", 
-          name: "tur", 
-          widget: "select", 
-          options: ["Mektup", "Kapsül", "Zarf"] 
-        }
+      - { label: "Tür", name: "tur", widget: "select", options: ["Mektup", "Kapsül", "Zarf"] }
       - { label: "İçerik", name: "body", widget: "markdown" }
