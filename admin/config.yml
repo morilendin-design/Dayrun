@@ -2,6 +2,7 @@ backend:
   name: github
   repo: morilendin-design/Dayrun
   branch: main
+  base_url: https://api.github.com
 
 media_folder: "images"
 public_folder: "/images"
