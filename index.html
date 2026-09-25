@@ -265,8 +265,7 @@
         let defaultData = {
             "GÜNCELLER": [
                 { title: "Güncel 1", body: "Güncel Serisi - Bölüm 1 içeriği burada yer alıyor." },
-                { title: "Güncel 2", body: "Güncel Serisi - Bölüm 2 içeriği burada yer alıyor." },
-                { title: "Güncel 3", body: "Güncel Serisi - Bölüm 3 içeriği burada yer alıyor." }
+                { title: "Güncel 2", body: "Güncel Serisi - Bölüm 2 içeriği burada yer alıyor." }
             ],
             "BELLEK KAPSÜLÜ": [
                 { title: "Kapsül 1", body: "Zamanın ötesinden gelen ilk mesaj." },
@@ -287,6 +286,13 @@
                 { title: "Özel Mektup 1", body: "Gökyüzünün her tonunda seni aramak..." }
             ]
         };
+
+        // Eğer tarayıcında eskiden kalan önbellek (localStorage) varsa fazlalığı temizlemesi için sıfırlıyoruz veya güncelliyoruz.
+        let savedData = JSON.parse(localStorage.getItem('dayrun_db'));
+        if (savedData && savedData["GÜNCELLER"] && savedData["GÜNCELLER"].length > 2) {
+            // Eğer eski kalıntı kalmışsa varsayılan temiz veriyle güncelliyoruz
+            localStorage.setItem('dayrun_db', JSON.stringify(defaultData));
+        }
 
         let dbContent = JSON.parse(localStorage.getItem('dayrun_db')) || defaultData;
 
@@ -344,27 +350,21 @@
                 dbContent[category] = [];
             }
 
-            // Aynı başlıkta bir içerik var mı diye kontrol et (Güncelleme Mantığı)
             let existingIndex = dbContent[category].findIndex(item => item.title.toLowerCase() === title.toLowerCase());
 
             if (existingIndex !== -1) {
-                // Eğer varsa, eski içeriğin metnini güncelle
                 dbContent[category][existingIndex].body = content;
                 toast(`"${title}" başarıyla güncellendi!`);
             } else {
-                // Yoksa yeni olarak listeye ekle
                 dbContent[category].push({ title: title, body: content });
                 toast(`"${title}" başarıyla eklendi!`);
             }
 
-            // Tarayıcı belleğine kaydet
             localStorage.setItem('dayrun_db', JSON.stringify(dbContent));
 
-            // Listeleri hemen güncelle
             renderLists();
             closeAdminPanel();
             
-            // Formu temizle
             document.getElementById('newTitle').value = '';
             document.getElementById('newContent').value = '';
         }
