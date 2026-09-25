@@ -94,7 +94,7 @@
         </header>
 
         <!-- HERO BANNER CARD -->
-        <div onclick="openReader('Yaratıcı\'ya Mektuplar', 'Özel Mektup 1', 'Mektup İçeriği')" 
+        <div onclick="openHeroCard()" 
              class="relative w-full h-44 rounded-2xl overflow-hidden cursor-pointer shadow-2xl group transition-all duration-300 hover:brightness-110">
             <img src="yaraticiyamektuplar.png" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-t from-[#0e0e12] via-transparent to-transparent opacity-90"></div>
@@ -112,14 +112,12 @@
             
             <div class="flex items-center gap-5 bg-transparent p-1">
                 <div class="w-36 h-24 rounded-2xl overflow-hidden shrink-0 relative bg-pink-200 shadow-lg group cursor-pointer"
-                     onclick="openReader('GÜNCELLER', 'Güncel 1', 'Güncel serinin ilk bölümüdür.')">
+                     onclick="openFirstItem('GÜNCELLER')">
                     <img src="guncelleri.jpg" class="w-full h-full object-cover">
                 </div>
 
-                <div class="flex flex-col gap-2.5 text-sm text-gray-300 font-normal">
-                    <button onclick="openReader('GÜNCELLER', 'Güncel 1', 'Güncel Serisi - Bölüm 1 içeriği burada yer alıyor.')" class="chapter-item text-left hover:text-white">Güncel 1</button>
-                    <button onclick="openReader('GÜNCELLER', 'Güncel 2', 'Güncel Serisi - Bölüm 2 içeriği burada yer alıyor.')" class="chapter-item text-left hover:text-white">Güncel 2</button>
-                    <button onclick="openReader('GÜNCELLER', 'Güncel 3', 'Güncel Serisi - Bölüm 3 içeriği burada yer alıyor.')" class="chapter-item text-left hover:text-white">Güncel 3</button>
+                <div id="list-GÜNCELLER" class="flex flex-col gap-2.5 text-sm text-gray-300 font-normal">
+                    <!-- Dinamik yüklenecek -->
                 </div>
             </div>
         </section>
@@ -130,14 +128,12 @@
             
             <div class="flex items-center gap-5 bg-transparent p-1">
                 <div class="w-36 h-24 rounded-2xl overflow-hidden shrink-0 relative bg-slate-800 shadow-lg group cursor-pointer"
-                     onclick="openReader('BELLEK KAPSÜLÜ', 'Kapsül 1', 'Anıların saklandığı ilk kapsül.')">
+                     onclick="openFirstItem('BELLEK KAPSÜLÜ')">
                     <img src="bellekkapsulu.png" class="w-full h-full object-cover">
                 </div>
 
-                <div class="flex flex-col gap-2.5 text-sm text-gray-300 font-normal">
-                    <button onclick="openReader('BELLEK KAPSÜLÜ', 'Kapsül 1', 'Zamanın ötesinden gelen ilk mesaj.')" class="chapter-item text-left hover:text-white">Kapsül 1</button>
-                    <button onclick="openReader('BELLEK KAPSÜLÜ', 'Kapsül 2', 'Unutulmayan hatıraların kaydı.')" class="chapter-item text-left hover:text-white">Kapsül 2</button>
-                    <button onclick="openReader('BELLEK KAPSÜLÜ', 'Kapsül 3', 'Geleceğe bırakılan notlar.')" class="chapter-item text-left hover:text-white">Kapsül 3</button>
+                <div id="list-BELLEK KAPSÜLÜ" class="flex flex-col gap-2.5 text-sm text-gray-300 font-normal">
+                    <!-- Dinamik yüklenecek -->
                 </div>
             </div>
         </section>
@@ -148,14 +144,12 @@
             
             <div class="flex items-center gap-5 bg-transparent p-1">
                 <div class="w-36 h-24 rounded-2xl overflow-hidden shrink-0 relative bg-amber-100 shadow-lg group cursor-pointer"
-                     onclick="openReader('ZORUNLU DOKUNUŞ', 'Bölüm 1', 'Zorunlu Dokunuş 1. Bölüm')">
+                     onclick="openFirstItem('ZORUNLU DOKUNUŞ')">
                     <img src="birhikaye.png" class="w-full h-full object-cover">
                 </div>
 
-                <div class="flex flex-col gap-2.5 text-sm text-gray-300 font-normal">
-                    <button onclick="openReader('ZORUNLU DOKUNUŞ', 'Bölüm 1', 'Zorunlu Dokunuş - 1. Bölüm.')" class="chapter-item text-left hover:text-white">Bölüm 1</button>
-                    <button onclick="openReader('ZORUNLU DOKUNUŞ', 'Bölüm 2', 'Zorunlu Dokunuş - 2. Bölüm.')" class="chapter-item text-left hover:text-white">Bölüm 2</button>
-                    <button onclick="openReader('ZORUNLU DOKUNUŞ', 'Bölüm 3', 'Zorunlu Dokunuş - 3. Bölüm.')" class="chapter-item text-left hover:text-white">Bölüm 3</button>
+                <div id="list-ZORUNLU DOKUNUŞ" class="flex flex-col gap-2.5 text-sm text-gray-300 font-normal">
+                    <!-- Dinamik yüklenecek -->
                 </div>
             </div>
         </section>
@@ -166,14 +160,12 @@
             
             <div class="flex items-center gap-5 bg-transparent p-1">
                 <div class="w-36 h-24 rounded-2xl overflow-hidden shrink-0 relative bg-indigo-900 shadow-lg group cursor-pointer"
-                     onclick="openReader('NEDEN MÜSLÜMANIM', 'Varan 1', 'Neden Müslümanım serisinin ilk yazısı.')">
+                     onclick="openFirstItem('NEDEN MÜSLÜMANIM')">
                     <img src="nedenmuslumanim.png" class="w-full h-full object-cover">
                 </div>
 
-                <div class="flex flex-col gap-2.5 text-sm text-gray-300 font-normal">
-                    <button onclick="openReader('NEDEN MÜSLÜMANIM', 'Varan 1', 'Neden Müslümanım? - Varan 1 detaylı anlatımı.')" class="chapter-item text-left hover:text-white">Varan 1</button>
-                    <button onclick="openReader('NEDEN MÜSLÜMANIM', 'Varan 2', 'Neden Müslümanım? - Varan 2 detaylı anlatımı.')" class="chapter-item text-left hover:text-white">Varan 2</button>
-                    <button onclick="openReader('NEDEN MÜSLÜMANIM', 'Varan 3', 'Neden Müslümanım? - Varan 3 detaylı anlatımı.')" class="chapter-item text-left hover:text-white">Varan 3</button>
+                <div id="list-NEDEN MÜSLÜMANIM" class="flex flex-col gap-2.5 text-sm text-gray-300 font-normal">
+                    <!-- Dinamik yüklenecek -->
                 </div>
             </div>
         </section>
@@ -184,7 +176,7 @@
         </footer>
     </div>
 
-    <!-- 1. LOGIN MODAL (ŞİFRE GİRİŞ EKRANI) -->
+    <!-- 1. LOGIN MODAL -->
     <div id="loginModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="bg-[#14151b] border border-gray-800 w-full max-w-xs rounded-3xl p-6 shadow-2xl flex flex-col gap-4 animate-fade-in relative">
             <div class="flex items-center justify-between">
@@ -197,7 +189,7 @@
         </div>
     </div>
 
-    <!-- 2. ADMIN PANEL MODAL (YENİ YAZI/MEKTUP EKLEME ALANI) -->
+    <!-- 2. ADMIN PANEL MODAL -->
     <div id="adminPanelModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="bg-[#14151b] border border-gray-800 w-full max-w-md h-[85vh] rounded-3xl p-6 shadow-2xl flex flex-col justify-between animate-fade-in relative overflow-hidden">
             <div class="flex items-center justify-between border-b border-gray-800 pb-4 shrink-0">
@@ -234,7 +226,7 @@
         </div>
     </div>
 
-    <!-- 3. CONTENT / CHAPTER READER MODAL -->
+    <!-- 3. READER MODAL -->
     <div id="readerModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="bg-[#14151b] border border-gray-800 w-full max-w-md h-[88vh] rounded-3xl p-6 shadow-2xl flex flex-col justify-between animate-fade-in relative overflow-hidden">
             
@@ -264,12 +256,53 @@
         </div>
     </div>
 
-    <!-- TOAST NOTIFICATION CONTAINER -->
     <div id="toastContainer" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none"></div>
 
     <script>
-        // Şifreyi buraya yazabilirsin (Şu an örnek olarak: dayrun123)
-        const ADMIN_PASSWORD = "day1221"; 
+        // Şifre güncellendi: Day1221
+        const ADMIN_PASSWORD = "Day1221"; 
+
+        let dbContent = JSON.parse(localStorage.getItem('dayrun_db')) || {
+            "GÜNCELLER": [
+                { title: "Güncel 1", body: "Güncel Serisi - Bölüm 1 içeriği burada yer alıyor." },
+                { title: "Güncel 2", body: "Güncel Serisi - Bölüm 2 içeriği burada yer alıyor." },
+                { title: "Güncel 3", body: "Güncel Serisi - Bölüm 3 içeriği burada yer alıyor." }
+            ],
+            "BELLEK KAPSÜLÜ": [
+                { title: "Kapsül 1", body: "Zamanın ötesinden gelen ilk mesaj." },
+                { title: "Kapsül 2", body: "Unutulmayan hatıraların kaydı." },
+                { title: "Kapsül 3", body: "Geleceğe bırakılan notlar." }
+            ],
+            "ZORUNLU DOKUNUŞ": [
+                { title: "Bölüm 1", body: "Zorunlu Dokunuş - 1. Bölüm." },
+                { title: "Bölüm 2", body: "Zorunlu Dokunuş - 2. Bölüm." },
+                { title: "Bölüm 3", body: "Zorunlu Dokunuş - 3. Bölüm." }
+            ],
+            "NEDEN MÜSLÜMANIM": [
+                { title: "Varan 1", body: "Neden Müslümanım? - Varan 1 detaylı anlatımı." },
+                { title: "Varan 2", body: "Neden Müslümanım? - Varan 2 detaylı anlatımı." },
+                { title: "Varan 3", body: "Neden Müslümanım? - Varan 3 detaylı anlatımı." }
+            ],
+            "Yaratıcı'ya Mektuplar": [
+                { title: "Özel Mektup 1", body: "Gökyüzünün her tonunda seni aramak..." }
+            ]
+        };
+
+        function renderLists() {
+            for (let cat in dbContent) {
+                let container = document.getElementById('list-' + cat);
+                if (container) {
+                    container.innerHTML = '';
+                    dbContent[cat].forEach(item => {
+                        let btn = document.createElement('button');
+                        btn.className = 'chapter-item text-left hover:text-white';
+                        btn.innerText = item.title;
+                        btn.onclick = () => openReader(cat, item.title, item.body);
+                        container.appendChild(btn);
+                    });
+                }
+            }
+        }
 
         function openLoginModal() {
             document.getElementById('adminPassword').value = '';
@@ -304,8 +337,35 @@
                 return;
             }
 
-            toast("İçerik başarıyla eklendi!");
+            if(!dbContent[category]) {
+                dbContent[category] = [];
+            }
+
+            dbContent[category].push({ title: title, body: content });
+            localStorage.setItem('dayrun_db', JSON.stringify(dbContent));
+
+            renderLists();
+            toast("İçerçi başarıyla eklendi ve kaydedildi!");
             closeAdminPanel();
+            
+            document.getElementById('newTitle').value = '';
+            document.getElementById('newContent').value = '';
+        }
+
+        function openHeroCard() {
+            const mektuplar = dbContent["Yaratıcı'ya Mektuplar"];
+            if (mektuplar && mektuplar.length > 0) {
+                openReader("Yaratıcı'ya Mektuplar", mektuplar[0].title, mektuplar[0].body);
+            } else {
+                openReader("Yaratıcı'ya Mektuplar", "Özel Mektup", "Henüz mektup eklenmemiş.");
+            }
+        }
+
+        function openFirstItem(category) {
+            const items = dbContent[category];
+            if (items && items.length > 0) {
+                openReader(category, items[0].title, items[0].body);
+            }
         }
 
         function openReader(category, title, summary) {
@@ -341,6 +401,10 @@
                 setTimeout(() => toastEl.remove(), 300);
             }, 2500);
         }
+
+        window.onload = function() {
+            renderLists();
+        };
     </script>
 </body>
 </html>
