@@ -193,7 +193,7 @@
     <div id="adminPanelModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
         <div class="bg-[#14151b] border border-gray-800 w-full max-w-md h-[85vh] rounded-3xl p-6 shadow-2xl flex flex-col justify-between animate-fade-in relative overflow-hidden">
             <div class="flex items-center justify-between border-b border-gray-800 pb-4 shrink-0">
-                <h3 class="text-white font-bold text-sm tracking-wider"><i class="fa-solid fa-pen-nib mr-2 text-pink-400"></i> Yeni İçerik Ekle</h3>
+                <h3 class="text-white font-bold text-sm tracking-wider"><i class="fa-solid fa-pen-nib mr-2 text-pink-400"></i> İçerik Ekle / Güncelle</h3>
                 <button onclick="closeAdminPanel()" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center text-gray-300 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
@@ -210,18 +210,18 @@
                 </div>
 
                 <div class="flex flex-col gap-1.5">
-                    <label class="text-gray-400 font-medium">Başlık / Bölüm Adı</label>
-                    <input type="text" id="newTitle" placeholder="Örn: Mektup 2 veya Bölüm 4" class="w-full bg-[#1c1c22] border border-gray-800 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-pink-500/50">
+                    <label class="text-gray-400 font-medium">Başlık / Bölüm Adı (Aynı başlığı yazarsan güncellenir)</label>
+                    <input type="text" id="newTitle" placeholder="Örn: Güncel 1 veya Mektup 2" class="w-full bg-[#1c1c22] border border-gray-800 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-pink-500/50">
                 </div>
 
                 <div class="flex flex-col gap-1.5 flex-1">
                     <label class="text-gray-400 font-medium">Yazı / Mektup İçeriği</label>
-                    <textarea id="newContent" placeholder="Buraya yazını veya mektubunu yaz..." class="w-full flex-1 bg-[#1c1c22] border border-gray-800 rounded-xl p-3 text-white focus:outline-none focus:border-pink-500/50 resize-none h-40"></textarea>
+                    <textarea id="newContent" placeholder="Buraya yazını veya güncellenen içeriği yaz..." class="w-full flex-1 bg-[#1c1c22] border border-gray-800 rounded-xl p-3 text-white focus:outline-none focus:border-pink-500/50 resize-none h-40"></textarea>
                 </div>
             </div>
 
             <div class="pt-3 border-t border-gray-800 shrink-0">
-                <button onclick="saveNewContent()" class="w-full bg-pink-400 text-black font-semibold rounded-xl py-3 text-xs tracking-wider uppercase hover:bg-pink-300 transition-colors">Yayınla</button>
+                <button onclick="saveNewContent()" class="w-full bg-pink-400 text-black font-semibold rounded-xl py-3 text-xs tracking-wider uppercase hover:bg-pink-300 transition-colors">Yayınla / Güncelle</button>
             </div>
         </div>
     </div>
@@ -259,6 +259,9 @@
     <div id="toastContainer" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none"></div>
 
     <script>
+        // ŞİFREN BURADA: İleride şifreni değiştirmek istersen tırnak içindeki yazıyı değiştirmen yeterli!
+        const ADMIN_PASSWORD = "Day1221";
+
         let defaultData = {
             "GÜNCELLER": [
                 { title: "Güncel 1", body: "Güncel Serisi - Bölüm 1 içeriği burada yer alıyor." },
@@ -314,10 +317,8 @@
 
         function checkPassword() {
             const pass = document.getElementById('adminPassword').value.trim();
-            // Şifre güvenli hale getirildi (Kodun içinde düz metin olarak görünmez)
-            const correctHash = "RGF5MTIyMQ=="; // Base64 kodlanmış hali
             
-            if (btoa(pass) === correctHash) {
+            if (pass === ADMIN_PASSWORD) {
                 closeLoginModal();
                 document.getElementById('adminPanelModal').classList.remove('hidden');
             } else {
@@ -343,13 +344,27 @@
                 dbContent[category] = [];
             }
 
-            dbContent[category].push({ title: title, body: content });
+            // Aynı başlıkta bir içerik var mı diye kontrol et (Güncelleme Mantığı)
+            let existingIndex = dbContent[category].findIndex(item => item.title.toLowerCase() === title.toLowerCase());
+
+            if (existingIndex !== -1) {
+                // Eğer varsa, eski içeriğin metnini güncelle
+                dbContent[category][existingIndex].body = content;
+                toast(`"${title}" başarıyla güncellendi!`);
+            } else {
+                // Yoksa yeni olarak listeye ekle
+                dbContent[category].push({ title: title, body: content });
+                toast(`"${title}" başarıyla eklendi!`);
+            }
+
+            // Tarayıcı belleğine kaydet
             localStorage.setItem('dayrun_db', JSON.stringify(dbContent));
 
+            // Listeleri hemen güncelle
             renderLists();
-            toast("İçerik başarıyla eklendi ve kaydedildi!");
             closeAdminPanel();
             
+            // Formu temizle
             document.getElementById('newTitle').value = '';
             document.getElementById('newContent').value = '';
         }
