@@ -1,11 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yönetim Paneli</title>
+  <title>DAYRUN - Güvenli Panel</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    .panel { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+    h2 { margin-bottom: 20px; color: #333; font-size: 22px; text-align: center; }
+    label { display: block; margin-top: 12px; font-weight: bold; color: #555; }
+    input, select, textarea { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+    button { background: #007bff; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; margin-top: 20px; font-size: 16px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+  </style>
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+  <div class="panel">
+    <h2>DAYRUN İçerik Ekle</h2>
+    <form name="dayrun-icerik" method="POST" data-netlify="true" onsubmit="return kontrolEt()">
+      
+      <!-- Gizli Netlify Form Adı -->
+      <input type="hidden" name="form-name" value="dayrun-icerik" />
+
+      <label>Gizli Şifre:</label>
+      <input type="password" id="sifre" required placeholder="Panel şifren..." />
+
+      <label>İçerik Türü:</label>
+      <select name="tur">
+        <option value="Mektup">Mektup</option>
+        <option value="Kapsül">Kapsül</option>
+        <option value="Zarf">Zarf</option>
+      </select>
+
+      <label>Başlık:</label>
+      <input type="text" name="baslik" required placeholder="İçerik başlığı..." />
+
+      <label>İçerik Metni:</label>
+      <textarea name="metin" rows="5" required placeholder="Yazını buraya yaz..."></textarea>
+
+      <button type="submit">Yayınla</button>
+    </form>
+  </div>
+
+  <script>
+    function kontrolEt() {
+      // Buraya kendi belirleyeceğin şifreyi yazabilirsin (Örn: benimSifrem123)
+      var gizliSifre = "benimSifrem1221"; 
+      var girilen = document.getElementById("sifre").value;
+      
+      if (girilen !== gizliSifre) {
+        alert("Hatalı şifre! İçerik gönderilemedi.");
+        return false; // Yanlışsa formu göndermez
+      }
+      return true; // Doğrusa Netlify'a gönderir
+    }
+  </script>
+
 </body>
 </html>
