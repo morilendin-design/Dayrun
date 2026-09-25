@@ -183,8 +183,8 @@
                 <h3 class="text-white font-bold text-sm tracking-wider">Yönetici Girişi</h3>
                 <button onclick="closeLoginModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <p class="text-xs text-gray-400">Yeni mektup/yazı eklemek için şifreni gir.</p>
-            <input type="password" id="adminPassword" placeholder="Şifre..." class="w-full bg-[#1c1c22] border border-gray-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-pink-500/50" onkeypress="handlePasswordKey(event)">
+            <p class="text-xs text-gray-400">Şifre: Day1221</p>
+            <input type="password" id="adminPassword" placeholder="Şifreyi buraya yaz..." class="w-full bg-[#1c1c22] border border-gray-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-pink-500/50">
             <button onclick="checkPassword()" class="w-full bg-white text-black font-semibold rounded-xl py-2.5 text-xs tracking-wider uppercase hover:bg-gray-200 transition-colors">Giriş Yap</button>
         </div>
     </div>
@@ -259,10 +259,7 @@
     <div id="toastContainer" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 pointer-events-none"></div>
 
     <script>
-        // Kesin Yönetici Şifresi
-        const ADMIN_PASSWORD = "Day1221"; 
-
-        let dbContent = JSON.parse(localStorage.getItem('dayrun_db')) || {
+        let defaultData = {
             "GÜNCELLER": [
                 { title: "Güncel 1", body: "Güncel Serisi - Bölüm 1 içeriği burada yer alıyor." },
                 { title: "Güncel 2", body: "Güncel Serisi - Bölüm 2 içeriği burada yer alıyor." },
@@ -288,14 +285,18 @@
             ]
         };
 
+        // LocalStorage'dan verileri çek, yoksa varsayılanı kullan
+        let dbContent = JSON.parse(localStorage.getItem('dayrun_db')) || defaultData;
+
         function renderLists() {
             for (let cat in dbContent) {
                 let container = document.getElementById('list-' + cat);
                 if (container) {
                     container.innerHTML = '';
-                    dbContent[cat].forEach(item => {
+                    // Eklenen yeni içerikler en başta görünsün diye ters çeviriyoruz (.slice().reverse())
+                    dbContent[cat].slice().reverse().forEach(item => {
                         let btn = document.createElement('button');
-                        btn.className = 'chapter-item text-left hover:text-white';
+                        btn.className = 'chapter-item text-left hover:text-white block truncate w-full';
                         btn.innerText = item.title;
                         btn.onclick = () => openReader(cat, item.title, item.body);
                         container.appendChild(btn);
@@ -307,26 +308,19 @@
         function openLoginModal() {
             document.getElementById('adminPassword').value = '';
             document.getElementById('loginModal').classList.remove('hidden');
-            setTimeout(() => document.getElementById('adminPassword').focus(), 100);
         }
 
         function closeLoginModal() {
             document.getElementById('loginModal').classList.add('hidden');
         }
 
-        function handlePasswordKey(event) {
-            if (event.key === 'Enter') {
-                checkPassword();
-            }
-        }
-
         function checkPassword() {
-            const pass = document.getElementById('adminPassword').value;
-            if (pass === ADMIN_PASSWORD) {
+            const pass = document.getElementById('adminPassword').value.trim();
+            if (pass === "Day1221") {
                 closeLoginModal();
                 document.getElementById('adminPanelModal').classList.remove('hidden');
             } else {
-                toast("Yanlış şifre! (Day1221)");
+                toast("Şifre yanlış! Day1221 yazmalısın.");
             }
         }
 
@@ -336,8 +330,8 @@
 
         function saveNewContent() {
             const category = document.getElementById('newCategory').value;
-            const title = document.getElementById('newTitle').value;
-            const content = document.getElementById('newContent').value;
+            const title = document.getElementById('newTitle').value.trim();
+            const content = document.getElementById('newContent').value.trim();
 
             if(!title || !content) {
                 toast("Lütfen başlık ve içerik doldur.");
@@ -348,13 +342,19 @@
                 dbContent[category] = [];
             }
 
+            // Yeni içeriği diziye ekle
             dbContent[category].push({ title: title, body: content });
+            
+            // Tarayıcı belleğine kaydet
             localStorage.setItem('dayrun_db', JSON.stringify(dbContent));
 
+            // Listeleri hemen güncelle
             renderLists();
+            
             toast("İçerik başarıyla eklendi ve kaydedildi!");
             closeAdminPanel();
             
+            // Formu temizle
             document.getElementById('newTitle').value = '';
             document.getElementById('newContent').value = '';
         }
@@ -362,7 +362,9 @@
         function openHeroCard() {
             const mektuplar = dbContent["Yaratıcı'ya Mektuplar"];
             if (mektuplar && mektuplar.length > 0) {
-                openReader("Yaratıcı'ya Mektuplar", mektuplar[0].title, mektuplar[0].body);
+                // En son eklenen mektubu açar
+                let latest = mektuplar[mektuplar.length - 1];
+                openReader("Yaratıcı'ya Mektuplar", latest.title, latest.body);
             } else {
                 openReader("Yaratıcı'ya Mektuplar", "Özel Mektup", "Henüz mektup eklenmemiş.");
             }
@@ -370,10 +372,10 @@
 
         function openFirstItem(category) {
             const items = dbContent[category];
-            if (items && items.length > 1) {
-                openReader(category, items[1].title, items[1].body);
-            } else if (items && items.length > 0) {
-                openReader(category, items[0].title, items[0].body);
+            if (items && items.length > 0) {
+                // En son eklenen içeriği açar
+                let latest = items[items.length - 1];
+                openReader(category, latest.title, latest.body);
             }
         }
 
