@@ -116,7 +116,7 @@
                     <img src="guncelleri.jpg" class="w-full h-full object-cover">
                 </div>
 
-                <div class="flex flex-col text-sm text-gray-300 font-normal w-full pt-1 overflow-hidden">
+                <div class="flex flex-col text-sm text-gray-300 font-normal min-w-0 flex-1 pt-1">
                     <div id="list-GÜNCELLER" class="flex flex-col gap-1.5 w-full"></div>
                     <div id="more-GÜNCELLER" class="hidden mt-1.5">
                         <button onclick="openAllListModal('GÜNCELLER')" class="text-xs text-pink-400 hover:text-pink-300 font-medium flex items-center gap-1 transition-colors">
@@ -138,7 +138,7 @@
                     <img src="bellekkapsulu.png" class="w-full h-full object-cover">
                 </div>
 
-                <div class="flex flex-col text-sm text-gray-300 font-normal w-full pt-1 overflow-hidden">
+                <div class="flex flex-col text-sm text-gray-300 font-normal min-w-0 flex-1 pt-1">
                     <div id="list-BELLEK KAPSÜLÜ" class="flex flex-col gap-1.5 w-full"></div>
                     <div id="more-BELLEK KAPSÜLÜ" class="hidden mt-1.5">
                         <button onclick="openAllListModal('BELLEK KAPSÜLÜ')" class="text-xs text-pink-400 hover:text-pink-300 font-medium flex items-center gap-1 transition-colors">
@@ -160,7 +160,7 @@
                     <img src="birhikaye.png" class="w-full h-full object-cover">
                 </div>
 
-                <div class="flex flex-col text-sm text-gray-300 font-normal w-full pt-1 overflow-hidden">
+                <div class="flex flex-col text-sm text-gray-300 font-normal min-w-0 flex-1 pt-1">
                     <div id="list-ZORUNLU DOKUNUŞ" class="flex flex-col gap-1.5 w-full"></div>
                     <div id="more-ZORUNLU DOKUNUŞ" class="hidden mt-1.5">
                         <button onclick="openAllListModal('ZORUNLU DOKUNUŞ')" class="text-xs text-pink-400 hover:text-pink-300 font-medium flex items-center gap-1 transition-colors">
@@ -182,7 +182,7 @@
                     <img src="nedenmuslumanim.png" class="w-full h-full object-cover">
                 </div>
 
-                <div class="flex flex-col text-sm text-gray-300 font-normal w-full pt-1 overflow-hidden">
+                <div class="flex flex-col text-sm text-gray-300 font-normal min-w-0 flex-1 pt-1">
                     <div id="list-NEDEN MÜSLÜMANIM" class="flex flex-col gap-1.5 w-full"></div>
                     <div id="more-NEDEN MÜSLÜMANIM" class="hidden mt-1.5">
                         <button onclick="openAllListModal('NEDEN MÜSLÜMANIM')" class="text-xs text-pink-400 hover:text-pink-300 font-medium flex items-center gap-1 transition-colors">
@@ -330,6 +330,13 @@
                 { title: "Özel Mektup 1", body: "Gökyüzünün her tonunda seni aramak..." }
             ]
         };
+
+        // Eski bozuk verileri temizlemek için localStorage kontrolü ve zorunlu güncelleme
+        let savedVersion = localStorage.getItem('dayrun_version');
+        if (savedVersion !== 'v3') {
+            localStorage.removeItem('dayrun_db');
+            localStorage.setItem('dayrun_version', 'v3');
+        }
 
         let dbContent = JSON.parse(localStorage.getItem('dayrun_db')) || defaultData;
 
