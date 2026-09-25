@@ -53,39 +53,27 @@
 
         /* Genel Scrollbar */
         ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #111216;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2a2d38;
-            border-radius: 3px;
-        }
-
-        /* Liste Alanları İçin Özel Sabit Boyut ve Kaydırma Çubuğu */
-        .bolum-listesi-kapsayici {
-            max-height: 120px; /* Yaklaşık 3-4 bölüm sığacak yükseklik */
-            overflow-y: auto;  /* Fazlası için kaydırma çubuğu çıkar */
-            padding-right: 4px;
-        }
-
-        .bolum-listesi-kapsayici::-webkit-scrollbar {
             width: 4px;
         }
-        .bolum-listesi-kapsayici::-webkit-scrollbar-track {
+        ::-webkit-scrollbar-track {
             background: transparent;
         }
-        .bolum-listesi-kapsayici::-webkit-scrollbar-thumb {
+        ::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
+            border-radius: 4px;
         }
-        .bolum-listesi-kapsayici::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.4);
+
+        /* Liste Alanları İçin Kusursuz Sabit Boyut ve Kaydırma Alanı */
+        .bolum-listesi-kapsayici {
+            height: 96px;      /* Sol taraftaki resmin yüksekliğiyle birebir (h-24 = 96px) */
+            max-height: 96px;
+            overflow-y: auto;  /* Fazla bölümler için kaydırma çubuğu */
+            padding-right: 4px;
         }
 
         .chapter-item {
             transition: all 0.2s ease;
+            line-height: 1.5;
         }
         .chapter-item:hover {
             color: #ffffff;
@@ -138,7 +126,7 @@
                     <img src="guncelleri.jpg" class="w-full h-full object-cover">
                 </div>
 
-                <div id="list-GÜNCELLER" class="bolum-listesi-kapsayici flex flex-col gap-2.5 text-sm text-gray-300 font-normal w-full">
+                <div id="list-GÜNCELLER" class="bolum-listesi-kapsayici flex flex-col gap-2 text-sm text-gray-300 font-normal w-full">
                     <!-- Dinamik yüklenecek -->
                 </div>
             </div>
@@ -154,7 +142,7 @@
                     <img src="bellekkapsulu.png" class="w-full h-full object-cover">
                 </div>
 
-                <div id="list-BELLEK KAPSÜLÜ" class="bolum-listesi-kapsayici flex flex-col gap-2.5 text-sm text-gray-300 font-normal w-full">
+                <div id="list-BELLEK KAPSÜLÜ" class="bolum-listesi-kapsayici flex flex-col gap-2 text-sm text-gray-300 font-normal w-full">
                     <!-- Dinamik yüklenecek -->
                 </div>
             </div>
@@ -170,7 +158,7 @@
                     <img src="birhikaye.png" class="w-full h-full object-cover">
                 </div>
 
-                <div id="list-ZORUNLU DOKUNUŞ" class="bolum-listesi-kapsayici flex flex-col gap-2.5 text-sm text-gray-300 font-normal w-full">
+                <div id="list-ZORUNLU DOKUNUŞ" class="bolum-listesi-kapsayici flex flex-col gap-2 text-sm text-gray-300 font-normal w-full">
                     <!-- Dinamik yüklenecek -->
                 </div>
             </div>
@@ -186,7 +174,7 @@
                     <img src="nedenmuslumanim.png" class="w-full h-full object-cover">
                 </div>
 
-                <div id="list-NEDEN MÜSLÜMANIM" class="bolum-listesi-kapsayici flex flex-col gap-2.5 text-sm text-gray-300 font-normal w-full">
+                <div id="list-NEDEN MÜSLÜMANIM" class="bolum-listesi-kapsayici flex flex-col gap-2 text-sm text-gray-300 font-normal w-full">
                     <!-- Dinamik yüklenecek -->
                 </div>
             </div>
@@ -418,7 +406,7 @@
             `;
 
             document.getElementById('readerBody').innerHTML = contentHTML;
-            document.getElementById('readerModal').classList.remove('hidden');
+            document.getElementById('readerModal').classList.remove('hidden');            
         }
 
         function closeReaderModal() {
