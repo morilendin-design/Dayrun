@@ -128,8 +128,8 @@
              class="relative w-full h-44 rounded-2xl overflow-hidden cursor-pointer shadow-2xl group transition-all duration-300 hover:brightness-110">
             
             <!-- Dynamic SVG SVG Aesthetic Background (Pastel arch with envelope & moon) -->
-            <svg class="w-full h-full object-cover" viewBox="0 0 400 180" preserveAspectRatio="xMidYMid slice">
-                <defs>
+            <img src="yaraticiyamektuplar.png" class="w-full h-full object-cover">
+
                     <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
                         <stop offset="0%" stop-color="#fbcfe8" />
                         <stop offset="50%" stop-color="#cbd5e1" />
@@ -143,8 +143,7 @@
                         <stop offset="0%" stop-color="transparent" />
                         <stop offset="60%" stop-color="rgba(13, 14, 18, 0.4)" />
                         <stop offset="100%" stop-color="rgba(13, 14, 18, 0.95)" />
-                    </linearGradient>
-                </defs>
+                        </linearGradient>
                 <!-- Sky background -->
                 <rect width="400" height="180" fill="url(#skyGrad)" />
                 <!-- Celestial arch shape -->
@@ -162,7 +161,6 @@
                     <path d="M 0 50 L 30 25" fill="none" stroke="#cbd5e1" stroke-width="1" />
                     <path d="M 80 50 L 50 25" fill="none" stroke="#cbd5e1" stroke-width="1" />
                 </g>
-            </svg>
 
             <!-- Gradient Overlay for Crisp Text Readability -->
             <div class="absolute inset-0 bg-gradient-to-t from-[#0e0e12] via-transparent to-transparent opacity-90"></div>
@@ -209,7 +207,7 @@
                 <!-- Thumbnail Card -->
                 <div class="w-36 h-24 rounded-2xl overflow-hidden shrink-0 relative bg-pink-200 shadow-lg group cursor-pointer"
                      onclick="openReader('GÜNCELLER', 'Güncel 1', 'Güncel serinin ilk bölümüdür.')">
-                    <img src="güncelleri.jpg" class="w-full h-full object-cover">
+                    <img src="guncelleri.jpg" class="w-full h-full object-cover">
 
                         <!-- Pink Gradient Sky -->
                         <defs>
@@ -259,9 +257,8 @@
                 <!-- Thumbnail Card (Hourglass Illustration) -->
                 <div class="w-36 h-24 rounded-2xl overflow-hidden shrink-0 relative bg-slate-800 shadow-lg group cursor-pointer"
                      onclick="openReader('BELLEK KAPSÜLÜ', 'Kapsül 1', 'Anıların saklandığı ilk kapsül.')">
-                    <img src="bellekkapsülü.png" class="w-full h-full object-cover">
+                    <img src="bellekkapsulu.png" class="w-full h-full object-cover">
 
-                        <defs>
                             <linearGradient id="hourglassBg" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" stop-color="#cbd5e1" />
                                 <stop offset="50%" stop-color="#e2e8f0" />
@@ -271,7 +268,6 @@
                                 <stop offset="0%" stop-color="#f472b6" />
                                 <stop offset="100%" stop-color="#38bdf8" />
                             </linearGradient>
-                        </defs>
                         <rect width="160" height="100" fill="url(#hourglassBg)" />
                         
                         <!-- Hourglass Graphic centered -->
@@ -287,7 +283,6 @@
                             <!-- Glowing sand drop -->
                             <line x1="22" y1="35" x2="22" y2="42" stroke="#f472b6" stroke-width="1.5" stroke-dasharray="1 1"/>
                         </g>
-                    </svg>
                 </div>
 
                 <!-- Links List -->
@@ -309,12 +304,10 @@
                      onclick="openReader('ZORUNLU DOKUNUŞ', 'Bölüm 1', 'Zorunlu Dokunuş Webtoon 1. Bölüm')">
                     <img src="birhikaye.png" class="w-full h-full object-cover">
 
-                        <defs>
                             <linearGradient id="romanceBg" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" stop-color="#fce7f3" />
                                 <stop offset="100%" stop-color="#fbcfe8" />
                             </linearGradient>
-                        </defs>
                         <rect width="160" height="100" fill="url(#romanceBg)" />
                         
                         <!-- Couple Illustration -->
@@ -339,7 +332,6 @@
                             <text x="50" y="16" font-size="11" font-weight="bold" fill="#be185d" text-anchor="middle" font-family="'Playfair Display', serif">Zorunlu</text>
                             <text x="50" y="30" font-size="11" font-weight="bold" fill="#be185d" text-anchor="middle" font-family="'Playfair Display', serif">Dokunuş</text>
                         </g>
-                    </svg>
                 </div>
 
                 <!-- Links List -->
@@ -359,16 +351,14 @@
                 <!-- Thumbnail Card (Serene Sunset by Water with Hijab silhouette) -->
                 <div class="w-36 h-24 rounded-2xl overflow-hidden shrink-0 relative bg-indigo-900 shadow-lg group cursor-pointer"
                      onclick="openReader('NEDEN MÜSLÜMANIM', 'Varan 1', 'Neden Müslümanım serisinin ilk yazısı.')">
-                    <img src="nedenmüslümanım.png" class="w-full h-full object-cover">
+                    <img src="nedenmuslumanim.png" class="w-full h-full object-cover">
 
-                        <defs>
                             <linearGradient id="sunsetBg" x1="0%" y1="0%" x2="0%" y2="100%">
                                 <stop offset="0%" stop-color="#fbcfe8" />
                                 <stop offset="40%" stop-color="#fed7aa" />
                                 <stop offset="70%" stop-color="#bfdbfe" />
                                 <stop offset="100%" stop-color="#93c5fd" />
                             </linearGradient>
-                        </defs>
                         <!-- Sky & Reflection Gradient -->
                         <rect width="160" height="100" fill="url(#sunsetBg)" />
                         
@@ -384,7 +374,6 @@
                             <!-- Shoulders/Dress -->
                             <path d="M 10 32 Q 28 28 46 32 L 52 48 Q 28 52 4 48 Z" fill="#64748b"/>
                         </g>
-                    </svg>
                 </div>
 
                 <!-- Links List -->
